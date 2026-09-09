@@ -1,0 +1,39 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract project
+        run: unzip -q kirana_shop_android_build_ready.zip -d project
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+          channel: stable
+
+      - name: Get dependencies
+        working-directory: project/kirana_shop_flutter_build_ready
+        run: flutter pub get
+
+      - name: Create Android project
+        working-directory: project/kirana_shop_flutter_build_ready
+        run: flutter create --platforms=android .
+
+      - name: Build APK
+        working-directory: project/kirana_shop_flutter_build_ready
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: kirana-shop-apk
+          path: project/kirana_shop_flutter_build_ready/build/app/outputs/flutter-apk/app-release.apk
