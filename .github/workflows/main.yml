@@ -13,7 +13,7 @@ jobs:
 
       - name: Extract final app
         run: |
-          unzip -q shri_airavat_foods_final_v2_fixed_qty.zip -d project
+          shri_airavat_foods_weightfix.zip
       - name: Enable AndroidX
         run: |
           echo "android.useAndroidX=true" > project/gradle.properties
