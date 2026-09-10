@@ -11,9 +11,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-            - name: Extract final app
+      - name: Extract final app
         run: |
           unzip -q shri_airavat_foods_FINAL_weight_fix.zip -d project
+
       - name: Enable AndroidX
         run: |
           echo "android.useAndroidX=true" > project/gradle.properties
