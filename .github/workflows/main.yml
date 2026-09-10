@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Extract final app
-        run: unzip -q shri_airavat_foods_final_v2_fixed.zip -d project
+        run: unzip -q shri_airavat_foods_final_v2.zip -d project
 
       - name: Enable AndroidX
         run: |
@@ -30,18 +30,46 @@ jobs:
           curl -L -o gradle.zip https://services.gradle.org/distributions/gradle-8.7-bin.zip
           unzip -q gradle.zip
 
-      - name: Build APK
+      - name: Build Release APK
         working-directory: project
-        run: ../gradle-8.7/bin/gradle :app:assembleDebug --no-daemon --stacktrace
+        run: ../gradle-8.7/bin/gradle :app:assembleRelease --no-daemon --stacktrace
 
-      - name: Find APK
+      - name: Sign APK
+        working-directory: project
         run: |
-          echo "APK files created:"
-          find project -type f -name "*.apk" -print
+          set -e
+
+          APK="app/build/outputs/apk/release/app-release-unsigned.apk"
+
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)"
+
+          keytool -genkeypair -v \
+            -keystore "$HOME/shri-airavat-debug.keystore" \
+            -alias androiddebugkey \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass android \
+            -keypass android \
+            -dname "CN=Android Debug,O=Android,C=US" \
+            -noprompt
+
+          "$BUILD_TOOLS/zipalign" -f -p 4 \
+            "$APK" app-release-aligned.apk
+
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks "$HOME/shri-airavat-debug.keystore" \
+            --ks-key-alias androiddebugkey \
+            --ks-pass pass:android \
+            --key-pass pass:android \
+            --out app-release.apk \
+            app-release-aligned.apk
+
+          "$BUILD_TOOLS/apksigner" verify --verbose app-release.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: shri-airavat-foods-apk
-          path: project/**/*.apk
+          path: project/app-release.apk
           if-no-files-found: error
