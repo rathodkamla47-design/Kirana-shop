@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract Android project
+      - name: Extract app
         run: |
           unzip -q shri_airavat_foods_app_v1.zip -d project
 
