@@ -13,7 +13,7 @@ jobs:
 
       - name: Extract final app
         run: | 
-    unzip -q shri_airavat_foods_CART_CHECKOUT_v1.zip -d project 
+     unzip -q shri_airavat_foods_CART_CHECKOUT_v1.zip -d project 
 
       - name: Enable AndroidX
         run: |
