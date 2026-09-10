@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Extract final app
-        run: unzip -q shri_airavat_foods_final_v2.zip -d project
+        run: run: unzip -q shri_airavat_foods_final_v2_fixed.zip -d project
 
       - name: Enable AndroidX
         run: |
