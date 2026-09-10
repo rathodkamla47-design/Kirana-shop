@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "684583152260",
+    "project_id": "shri-airawat-food-s",
+    "storage_bucket": "shri-airawat-food-s.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684583152260:android:02bd6e9894286ea01f30d1",
+        "android_client_info": {
+          "package_name": "com.shri.airawatfoods"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzPzJSiJAssqPC4vUOfRPrKYiEW_S59PA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
