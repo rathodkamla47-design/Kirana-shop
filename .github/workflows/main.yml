@@ -17,6 +17,11 @@ jobs:
       - name: Copy Firebase config
         run: cp google-services.json project/app/google-services.json
 
+      - name: Enable AndroidX
+        run: |
+          echo "android.useAndroidX=true" > project/gradle.properties
+          echo "android.enableJetifier=true" >> project/gradle.properties
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
