@@ -11,9 +11,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract final app
+      - name: Extract app
         run: |
-          unzip -q shri_airavat_foods_PRICE_STOCK_v1.zip -d project
+          unzip -q shri_airavat_foods_PRICE_STOCK_v1.zip
+          mv price_stock_project project
 
       - name: Enable AndroidX
         run: |
