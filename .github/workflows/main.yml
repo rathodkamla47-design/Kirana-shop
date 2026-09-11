@@ -13,8 +13,10 @@ jobs:
 
       - name: Extract app
         run: |
-          unzip -q shri_airavat_foods_PRICE_STOCK_v1.zip
-          mv price_stock_project project
+          - name: Extract app
+  run: |
+    unzip -q shri_airavat_foods_PRICE_STOCK_v3_FIXED.zip
+    mv price_stock_project project
 
       - name: Enable AndroidX
         run: |
