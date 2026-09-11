@@ -14,7 +14,6 @@ jobs:
       - name: Extract app
         run: |
           unzip -q shri_airavat_foods_CUSTOMER_PRODUCT_FIRST_v1.zip
-          mv customer_flow_project project
 
       - name: Enable AndroidX
         run: |
