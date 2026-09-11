@@ -13,7 +13,11 @@ jobs:
 
       - name: Extract app
         run: |
-          unzip -q shri_airavat_foods_CUSTOMER_PRODUCT_FIRST_v1.zip
+          - name: Extract app
+  run: |
+    rm -rf project
+    mkdir project
+    unzip -q shri_airavat_foods_CUSTOMER_PRODUCT_FIRST_v1.zip -d project
 
       - name: Enable AndroidX
         run: |
