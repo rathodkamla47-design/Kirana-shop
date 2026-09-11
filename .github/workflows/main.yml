@@ -25,4 +25,54 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '
+          java-version: '17'
+
+      - name: Download Gradle
+        run: |
+          curl -L -o gradle.zip https://services.gradle.org/distributions/gradle-8.7-bin.zip
+          unzip -q gradle.zip
+
+      - name: Build Debug APK
+        working-directory: project
+        run: |
+          ../gradle-8.7/bin/gradle :app:assembleDebug --no-daemon --stacktrace
+
+      - name: Sign APK
+        working-directory: project
+        run: |
+          set -e
+
+          APK="app/build/outputs/apk/debug/app-debug.apk"
+
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)"
+
+          keytool -genkeypair -v \
+            -keystore "$HOME/shri-airavat-debug.keystore" \
+            -alias androiddebugkey \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass android \
+            -keypass android \
+            -dname "CN=Android Debug,O=Android,C=US" \
+            -noprompt
+
+          "$BUILD_TOOLS/zipalign" -f -p 4 \
+            "$APK" app-debug-aligned.apk
+
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks "$HOME/shri-airavat-debug.keystore" \
+            --ks-key-alias androiddebugkey \
+            --ks-pass pass:android \
+            --key-pass pass:android \
+            --out app-debug-signed.apk \
+            app-debug-aligned.apk
+
+          "$BUILD_TOOLS/apksigner" verify --verbose app-debug-signed.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: shri-airavat-foods-apk
+          path: project/app-debug-signed.apk
+          if-no-files-found: error
