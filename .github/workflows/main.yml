@@ -14,7 +14,7 @@ jobs:
       - name: Extract final app
         run: |
           
-unzip -q shri_airavat_foods_WHATSAPP_BILL_v1.zip -d project
+ unzip -q shri_airavat_foods_WHATSAPP_BILL_v1.zip -d project
       - name: Enable AndroidX
         run: |
           echo "android.useAndroidX=true" > project/gradle.properties
