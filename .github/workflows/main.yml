@@ -13,7 +13,7 @@ jobs:
 
       - name: Extract WhatsApp Bill app
         run: |
-          unzip -q shri_airavat_foods_WHATSAPP_BILL_v1.zip -d project
+          unzip -q shri_airavat_foods_WHATSAPP_BILL_ADMIN_v2.zip -d project
 
       - name: Enable AndroidX
         run: |
